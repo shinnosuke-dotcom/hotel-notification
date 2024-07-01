@@ -1,0 +1,31 @@
+name: Check Hotel Availability
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run script
+      env:
+        RAKUTEN_API_KEY: ${{ secrets.RAKUTEN_API_KEY }}
+        LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
+        HOTEL_ID: ${{ secrets.HOTEL_ID }}
+        ADULT_NUM: ${{ secrets.ADULT_NUM }}
+        START_DATE: ${{ secrets.START_DATE }}
+        END_DATE: ${{ secrets.END_DATE }}
+      run: node index.js
