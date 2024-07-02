@@ -47,7 +47,8 @@ const checkAvailability = async () => {
       const data = response.data;
 
       if (data.hotels && data.hotels.length > 0) {
-        await sendLineNotification(`空室があります！ホテルID: ${HOTEL_ID} チェックイン: ${checkinDate}`);
+        const hotelName = data.hotels[0].hotel[0].hotelBasicInfo.hotelName;
+        await sendLineNotification(`空室があります！ホテル名: ${hotelName} チェックイン: ${checkinDate}`);
       }
     } catch (error) {
       console.error(`エラーが発生しました (チェックイン: ${checkinDate}):`, error);
