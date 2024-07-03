@@ -1,14 +1,31 @@
 require('dotenv').config();
 const axios = require('axios');
 
+// 環境変数から基本情報を取得
 const {
   RAKUTEN_API_KEY,
   LINE_NOTIFY_TOKEN,
   HOTEL_ID,
-  ADULT_NUM,
-  START_DATE,
-  END_DATE
 } = process.env;
+
+// 実行日の次の日を取得
+const getNextDay = () => {
+  const today = new Date();
+  const nextDay = new Date(today);
+  nextDay.setDate(today.getDate() + 1);
+  return nextDay.toISOString().split('T')[0];
+};
+
+// 開始日から3ヶ月後の日付を取得
+const getThreeMonthsLater = (startDate) => {
+  const start = new Date(startDate);
+  const threeMonthsLater = new Date(start);
+  threeMonthsLater.setMonth(start.getMonth() + 3);
+  return threeMonthsLater.toISOString().split('T')[0];
+};
+
+const START_DATE = getNextDay();
+const END_DATE = getThreeMonthsLater(START_DATE);
 
 const getDatesInRange = (startDate, endDate) => {
   const start = new Date(startDate);
@@ -51,7 +68,8 @@ const checkAvailability = async () => {
     }
   } catch (error) {
     if(error?.response?.status!==404){
-      console.error(`エラーが発生しました (チェックイン: ${checkinDate}):`, error);
+    console.error(`エラーが発生しました (チェックイン: ${checkinDate}):`, error);
+    }
   }
 
   if (dates.length > 0) {
