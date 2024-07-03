@@ -29,30 +29,34 @@ const getDatesInRange = (startDate, endDate) => {
   return dates;
 };
 
+const dates = getDatesInRange(START_DATE, END_DATE);
+
 const checkAvailability = async () => {
-  const dates = getDatesInRange(START_DATE, END_DATE);
+  const { checkinDate, checkoutDate } = dates.shift();
 
-  for (const { checkinDate, checkoutDate } of dates) {
-    try {
-      const response = await axios.get('https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426', {
-        params: {
-          applicationId: RAKUTEN_API_KEY,
-          hotelNo: HOTEL_ID,
-          checkinDate,
-          checkoutDate,
-          adultNum: ADULT_NUM
-        }
-      });
-
-      const data = response.data;
-
-      if (data.hotels && data.hotels.length > 0) {
-        const hotelName = data.hotels[0].hotel[0].hotelBasicInfo.hotelName;
-        await sendLineNotification(`空室があります！ホテル名: ${hotelName} チェックイン: ${checkinDate}`);
+  try {
+    const response = await axios.get('https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426', {
+      params: {
+        applicationId: RAKUTEN_API_KEY,
+        hotelNo: HOTEL_ID,
+        checkinDate,
+        checkoutDate,
       }
-    } catch (error) {
+    });
+
+    const data = response.data;
+
+    if (data.hotels && data.hotels.length > 0) {
+      await sendLineNotification(`空室があります！ホテルID: ${HOTEL_ID} チェックイン: ${checkinDate}`);
+    }
+  } catch (error) {
+    if(error?.response?.status!==404){
       console.error(`エラーが発生しました (チェックイン: ${checkinDate}):`, error);
     }
+  }
+
+  if (dates.length > 0) {
+    setTimeout(checkAvailability, 1000); // 1秒遅らせる
   }
 };
 
