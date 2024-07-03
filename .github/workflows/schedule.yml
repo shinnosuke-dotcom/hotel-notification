@@ -25,7 +25,4 @@ jobs:
         RAKUTEN_API_KEY: ${{ secrets.RAKUTEN_API_KEY }}
         LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
         HOTEL_ID: ${{ secrets.HOTEL_ID }}
-        ADULT_NUM: ${{ secrets.ADULT_NUM }}
-        START_DATE: ${{ secrets.START_DATE }}
-        END_DATE: ${{ secrets.END_DATE }}
-      run: node index.js
+      run: npm start
