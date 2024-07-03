@@ -6,6 +6,7 @@ const {
   RAKUTEN_API_KEY,
   LINE_NOTIFY_TOKEN,
   HOTEL_ID,
+  RAKUTEN_AFFILIATE_ID
 } = process.env;
 
 // 実行日の次の日を取得
@@ -65,11 +66,16 @@ const checkAvailability = async () => {
 
     if (data.hotels && data.hotels.length > 0) {
       const hotelName = data.hotels[0].hotel[0].hotelBasicInfo.hotelName;
-      await sendLineNotification(`空室があります！ホテル名: ${hotelName} チェックイン: ${checkinDate}`);
+      const hotelURL = data.hotels[0].hotel[1].roomInfo[0].roomBasicInfo.reserveUrl;
+
+      await sendLineNotification(`空室があります！
+ホテル名: ${hotelName} 
+チェックイン: ${checkinDate} 
+予約ページ: ${hotelURL}`);
     }
   } catch (error) {
     if(error?.response?.status!==404){
-    console.error(`エラーが発生しました (チェックイン: ${checkinDate}):`, error);
+      console.error(`エラーが発生しました (チェックイン: ${checkinDate}):`, error);
     }
   }
 
