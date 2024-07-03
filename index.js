@@ -52,7 +52,6 @@ const checkAvailability = async () => {
   } catch (error) {
     if(error?.response?.status!==404){
       console.error(`エラーが発生しました (チェックイン: ${checkinDate}):`, error);
-    }
   }
 
   if (dates.length > 0) {
