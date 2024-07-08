@@ -51,6 +51,15 @@ const getDatesInRange = (startDate, endDate) => {
   return dates;
 };
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  const weekDay = ["日", "月", "火", "水", "木", "金", "土"][date.getDay()];
+  return `${year}/${month}/${day}(${weekDay})`;
+};
+
 const dates = getDatesInRange(START_DATE, END_DATE);
 
 const checkAvailability = async () => {
@@ -80,7 +89,7 @@ const checkAvailability = async () => {
       const message = `【空室情報】
 トイストーリーホテルに空室があります！
 
-チェックイン日: ${checkinDate} 
+チェックイン日: ${formatDate(checkinDate)} 
 予約ページ: ${hotelURL}
 
 #disney #トイストーリーホテル #pr`;
