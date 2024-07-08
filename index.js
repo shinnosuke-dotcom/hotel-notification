@@ -74,17 +74,19 @@ const checkAvailability = async () => {
     if (data.hotels && data.hotels.length > 0) {
       const hotelName = data.hotels[0].hotel[0].hotelBasicInfo.hotelName;
       const hotelURL =
-        data.hotels[0].hotel[1].roomInfo[0].roomBasicInfo.reserveUrl;
+        data.hotels[0].hotel[0].hotelBasicInfo.hotelInformationUrl;
+      //  data.hotels[0].hotel[1].roomInfo[0].roomBasicInfo.reserveUrl;
 
       const message = `【空室情報】
-ホテル名: ${hotelName} 
+トイストーリーホテルに空室があります！
+
 チェックイン日: ${checkinDate} 
 予約ページ: ${hotelURL}
 
-#disney #トイストーリーホテル`;
+#disney #トイストーリーホテル #pr`;
 
       await sendTwitterNotification(message);
-      // await sendLineNotification(message);
+      await sendLineNotification(message);
     }
   } catch (error) {
     if (error?.response?.status !== 404) {
