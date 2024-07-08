@@ -86,7 +86,7 @@ const checkAvailability = async () => {
 #disney #トイストーリーホテル #pr`;
 
       await sendTwitterNotification(message);
-      await sendLineNotification(message);
+      // await sendLineNotification(message);
     }
   } catch (error) {
     if (error?.response?.status !== 404) {
