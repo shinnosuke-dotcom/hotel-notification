@@ -87,15 +87,15 @@ const checkAvailability = async () => {
       //  data.hotels[0].hotel[1].roomInfo[0].roomBasicInfo.reserveUrl;
 
       const message = `【空室情報】
-トイストーリーホテルに空室があります！
+ファンタジースプリングスホテルに空室があります！
 
 チェックイン日: ${formatDate(checkinDate)} 
 予約ページ: ${hotelURL}
 
-#disney #トイストーリーホテル #pr`;
+#disney #ファンタジースプリングスホテル #pr`;
 
       await sendTwitterNotification(message);
-      // await sendLineNotification(message);
+      await sendLineNotification(message);
     }
   } catch (error) {
     if (error?.response?.status !== 404) {
