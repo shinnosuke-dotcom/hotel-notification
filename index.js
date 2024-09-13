@@ -71,6 +71,7 @@ const checkAvailability = async () => {
       {
         params: {
           applicationId: RAKUTEN_API_KEY,
+          affiliateId: RAKUTEN_AFFILIATE_ID,
           hotelNo: HOTEL_ID,
           checkinDate,
           checkoutDate,
@@ -99,7 +100,7 @@ const checkAvailability = async () => {
 部屋情報：${roomName}
 予約ページ：${reserveUrl}
 
-#disney #ファンタジースプリングスホテル #pr`;
+#TDR #disney #ファンタジースプリングスホテル #pr`;
 
       await sendTwitterNotification(message);
       await sendLineNotification(message);
