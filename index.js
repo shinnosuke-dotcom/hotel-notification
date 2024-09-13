@@ -100,7 +100,7 @@ const checkAvailability = async () => {
 部屋情報：${roomName}
 予約ページ：${reserveUrl}
 
-#TDR #disney #ファンタジースプリングスホテル #pr`;
+#TDS #disney #ファンタジースプリングスホテル #pr`;
 
       await sendTwitterNotification(message);
       await sendLineNotification(message);
