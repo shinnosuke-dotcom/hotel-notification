@@ -86,7 +86,8 @@ const checkAvailability = async () => {
       // ホテル名
       // const hotelName = data.hotels[0].hotel[0].hotelBasicInfo.hotelName;
       // ホテルURL
-      // const hotelURL =  data.hotels[0].hotel[0].hotelBasicInfo.hotelInformationUrl;
+      const hotelURL =
+        data.hotels[0].hotel[0].hotelBasicInfo.hotelInformationUrl;
 
       const roomName =
         data.hotels[0].hotel[1].roomInfo[0].roomBasicInfo.roomName;
@@ -96,9 +97,10 @@ const checkAvailability = async () => {
       const message = `【空室情報】
 ファンタジースプリングスホテルに空室があります！
 
-チェックイン日： ${formatDate(checkinDate)} 
-部屋情報：${roomName}
-予約ページ：${reserveUrl}
+チェックイン：${formatDate(checkinDate)} 
+部屋情報　　：${roomName}
+ホテルページ：${hotelURL}
+予約ページ　：${reserveUrl}
 
 #TDS #disney #ファンタジースプリングスホテル #pr`;
 
