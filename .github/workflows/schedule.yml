@@ -23,6 +23,7 @@ jobs:
       - name: Run script
         env:
           RAKUTEN_API_KEY: ${{ secrets.RAKUTEN_API_KEY }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
           LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
           HOTEL_ID: ${{ secrets.HOTEL_ID }}
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
