@@ -104,7 +104,7 @@ const checkAvailability = async () => {
 
 #TDS #disney #ファンタジースプリングスホテル #pr`;
 
-      await sendTwitterNotification(message);
+      // await sendTwitterNotification(message);
       await sendLineNotification(message);
     }
   } catch (error) {
