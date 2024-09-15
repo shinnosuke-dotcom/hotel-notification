@@ -98,7 +98,7 @@ const checkAvailability = async () => {
 ファンタジースプリングスホテルに空室があります！
 
 チェックイン：${formatDate(checkinDate)} 
-部屋情報　　：${roomName}
+部屋情報　　：${truncateString(roomName)}
 ホテルページ：${hotelURL}
 予約ページ　：${reserveUrl}
 
@@ -145,6 +145,14 @@ const sendLineNotification = async (message) => {
     console.error("LINE通知の送信中にエラーが発生しました:", error);
   }
 };
+
+function truncateString(str) {
+  // 文字列が13文字以上の場合、12文字に切り取って"..."を追加
+  if (str.length > 12) {
+    return str.slice(0, 12) + "...";
+  }
+  return str;
+}
 
 // スクリプトの実行
 checkAvailability();
