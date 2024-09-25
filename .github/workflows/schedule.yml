@@ -2,7 +2,7 @@ name: Check Hotel Availability
 
 on:
   schedule:
-    - cron: "*/7 * * * *"
+    - cron: "*/6 * * * *"
 
 jobs:
   build:
