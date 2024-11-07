@@ -21,11 +21,11 @@ const getNextDay = () => {
   return nextDay.toISOString().split("T")[0];
 };
 
-// 開始日から3ヶ月後の日付を取得
+// 開始日から4ヶ月後の日付を取得
 const getThreeMonthsLater = (startDate) => {
   const start = new Date(startDate);
   const threeMonthsLater = new Date(start);
-  threeMonthsLater.setMonth(start.getMonth() + 3);
+  threeMonthsLater.setMonth(start.getMonth() + 4);
   return threeMonthsLater.toISOString().split("T")[0];
 };
 
