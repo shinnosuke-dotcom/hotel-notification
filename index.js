@@ -1,6 +1,8 @@
 const { TwitterApi } = require("twitter-api-v2");
 const axios = require("axios");
 require("dotenv").config();
+// 消してよい
+const cheerio = require("cheerio");
 
 // 環境変数から基本情報を取得
 const { RAKUTEN_API_KEY, LINE_NOTIFY_TOKEN, HOTEL_ID, RAKUTEN_AFFILIATE_ID } =
@@ -12,6 +14,9 @@ const twitterClient = new TwitterApi({
   accessToken: process.env.TWITTER_ACCESS_TOKEN,
   accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
+
+// 消してよい
+const URL = "https://l-tike.com/st1/l-web-gs_mlts2025/sitetop";
 
 // 実行日の次の日を取得
 const getNextDay = () => {
@@ -154,5 +159,26 @@ function truncateString(str) {
   return str;
 }
 
+// 消してよい
+async function checkTicketStatus() {
+  try {
+    const response = await axios.get(URL, {
+      timeout: 10000,
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      },
+    });
+    const $ = cheerio.load(response.data);
+
+    if ($("body").text().includes("発売中")) {
+      await sendLineNotification("チケットが発売されたかも！");
+    }
+  } catch (error) {
+    console.error(`エラー: ${error.message}`);
+  }
+}
+
 // スクリプトの実行
+checkTicketStatus();
 checkAvailability();
