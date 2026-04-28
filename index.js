@@ -77,7 +77,7 @@ const checkAvailability = async () => {
           checkoutDate,
           adultNum: 2,
         },
-      }
+      },
     );
 
     const data = response.data;
@@ -94,15 +94,12 @@ const checkAvailability = async () => {
       const reserveUrl =
         data.hotels[0].hotel[1].roomInfo[0].roomBasicInfo.reserveUrl;
 
-      const message = `【空室情報】
-ファンタジースプリングスホテルに空室があります！
+      const message = `【${formatDate(checkinDate)}】ファンタジースプリングスホテルに空室あり🎌
 
-チェックイン：${formatDate(checkinDate)} 
-部屋情報　　：${truncateString(roomName)}
-ホテルページ：${hotelURL}
-予約ページ　：${reserveUrl}
+部屋：${truncateString(roomName)}
+予約：${reserveUrl}
 
-#TDS #disney #ファンタジースプリングスホテル #pr`;
+#ディズニーシー #東京ディズニーシー #TDS #ファンタジースプリングスホテル #ディズニーホテル #ディズニー #pr`;
 
       await sendTwitterNotification(message);
       await sendLineNotification(message);
@@ -111,7 +108,7 @@ const checkAvailability = async () => {
     if (error?.response?.status !== 404) {
       console.error(
         `エラーが発生しました (チェックイン: ${checkinDate}):`,
-        error
+        error,
       );
     }
   }
@@ -139,7 +136,7 @@ const sendLineNotification = async (message) => {
           Authorization: `Bearer ${LINE_NOTIFY_TOKEN}`,
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+      },
     );
   } catch (error) {
     console.error("LINE通知の送信中にエラーが発生しました:", error);
