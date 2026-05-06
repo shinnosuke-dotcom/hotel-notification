@@ -102,7 +102,6 @@ const checkAvailability = async () => {
 #ディズニーシー #東京ディズニーシー #TDS #ファンタジースプリングスホテル #ディズニーホテル #ディズニー #pr`;
 
       await sendTwitterNotification(message);
-      await sendLineNotification(message);
     }
   } catch (error) {
     if (error?.response?.status !== 404) {
