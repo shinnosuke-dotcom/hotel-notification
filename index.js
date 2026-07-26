@@ -3,15 +3,20 @@ const axios = require("axios");
 require("dotenv").config();
 
 // 環境変数から基本情報を取得
-const { RAKUTEN_API_KEY, LINE_NOTIFY_TOKEN, HOTEL_ID, RAKUTEN_AFFILIATE_ID } =
-  process.env;
+const {
+  RAKUTEN_API_KEY,
+  RAKUTEN_ACCESS_KEY,
+  LINE_NOTIFY_TOKEN,
+  HOTEL_ID,
+  RAKUTEN_AFFILIATE_ID,
+} = process.env;
 
-// const twitterClient = new TwitterApi({
-//   appKey: process.env.TWITTER_API_KEY,
-//   appSecret: process.env.TWITTER_API_SECRET_KEY,
-//   accessToken: process.env.TWITTER_ACCESS_TOKEN,
-//   accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-// });
+const twitterClient = new TwitterApi({
+  appKey: process.env.TWITTER_API_KEY,
+  appSecret: process.env.TWITTER_API_SECRET_KEY,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+});
 
 // 実行日の次の日を取得
 const getNextDay = () => {
@@ -67,15 +72,21 @@ const checkAvailability = async () => {
 
   try {
     const response = await axios.get(
-      "https://app.rakuten.co.jp/services/api/Travel/VacantHotelSearch/20170426",
+      "https://openapi.rakuten.co.jp/engine/api/Travel/VacantHotelSearch/20170426",
       {
+        headers: {
+          Referer: "https://mura-shin.com/",
+          Origin: "https://mura-shin.com/",
+        },
         params: {
           applicationId: RAKUTEN_API_KEY,
+          accessKey: RAKUTEN_ACCESS_KEY,
           affiliateId: RAKUTEN_AFFILIATE_ID,
           hotelNo: HOTEL_ID,
           checkinDate,
           checkoutDate,
           adultNum: 2,
+          format: "json",
         },
       },
     );
@@ -107,7 +118,7 @@ const checkAvailability = async () => {
     if (error?.response?.status !== 404) {
       console.error(
         `エラーが発生しました (チェックイン: ${checkinDate}):`,
-        error,
+        error?.response?.data || error.message,
       );
     }
   }
