@@ -6,12 +6,12 @@ require("dotenv").config();
 const { RAKUTEN_API_KEY, LINE_NOTIFY_TOKEN, HOTEL_ID, RAKUTEN_AFFILIATE_ID } =
   process.env;
 
-const twitterClient = new TwitterApi({
-  appKey: process.env.TWITTER_API_KEY,
-  appSecret: process.env.TWITTER_API_SECRET_KEY,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-});
+// const twitterClient = new TwitterApi({
+//   appKey: process.env.TWITTER_API_KEY,
+//   appSecret: process.env.TWITTER_API_SECRET_KEY,
+//   accessToken: process.env.TWITTER_ACCESS_TOKEN,
+//   accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+// });
 
 // 実行日の次の日を取得
 const getNextDay = () => {
