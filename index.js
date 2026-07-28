@@ -66,9 +66,20 @@ const formatDate = (dateString) => {
 };
 
 const dates = getDatesInRange(START_DATE, END_DATE);
+let hasError = false;
+let latestError = null;
 
 const checkAvailability = async () => {
-  const { checkinDate, checkoutDate } = dates.shift();
+  const nextDate = dates.shift();
+
+  if (!nextDate) {
+    if (hasError) {
+      throw latestError;
+    }
+    return;
+  }
+
+  const { checkinDate, checkoutDate } = nextDate;
 
   try {
     const response = await axios.get(
@@ -85,7 +96,6 @@ const checkAvailability = async () => {
           hotelNo: HOTEL_ID,
           checkinDate,
           checkoutDate,
-          adultNum: 2,
           format: "json",
         },
       },
@@ -120,11 +130,18 @@ const checkAvailability = async () => {
         `エラーが発生しました (チェックイン: ${checkinDate}):`,
         error?.response?.data || error.message,
       );
+      hasError = true;
+      latestError = error;
     }
   }
 
   if (dates.length > 0) {
-    setTimeout(checkAvailability, 1000); // 1秒遅らせる
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return checkAvailability();
+  }
+
+  if (hasError) {
+    throw latestError;
   }
 };
 
@@ -162,4 +179,7 @@ function truncateString(str) {
 }
 
 // スクリプトの実行
-checkAvailability();
+checkAvailability().catch((error) => {
+  console.error("全日程の確認完了後に例外を検知しました:", error);
+  process.exitCode = 1;
+});
